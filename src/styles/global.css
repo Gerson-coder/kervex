@@ -67,7 +67,7 @@ body::before {
    ============================================================ */
 #robo { position: fixed; bottom: 24px; right: 24px; z-index: 200; cursor: pointer; transition: transform .3s; user-select: none; }
 #robo:hover { transform: scale(1.08); }
-#robo svg { width: 60px; height: auto; filter: drop-shadow(0 0 10px rgba(0,229,255,0.4)); }
+#robot-canvas { width: 60px; height: 72px; filter: drop-shadow(0 0 10px rgba(0,229,255,0.4)); }
 #robo-bubble { position: absolute; bottom: 68px; right: 0; background: var(--panel2); border: 1px solid var(--neon); padding: 10px 14px; width: 200px; font-family: var(--mono); font-size: 11px; color: var(--neon); line-height: 1.5; display: none; pointer-events: none; border-radius: 8px; }
 #robo-bubble::after { content: ''; position: absolute; bottom: -6px; right: 16px; width: 10px; height: 10px; background: var(--panel2); border-right: 1px solid var(--neon); border-bottom: 1px solid var(--neon); transform: rotate(45deg); }
 #robo.show-bubble #robo-bubble { display: block; }
