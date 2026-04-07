@@ -7,7 +7,7 @@ const io = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.06 });
 
-document.querySelectorAll('.pc,.pg,.plan,.test-card').forEach(el => {
+document.querySelectorAll('.pc,.pg,.plan,.test-card,.proj-card,.form-group').forEach(el => {
   (el as HTMLElement).style.opacity = '0';
   (el as HTMLElement).style.transform = 'translateY(16px)';
   (el as HTMLElement).style.transition = 'opacity 0.4s ease, transform 0.4s ease';

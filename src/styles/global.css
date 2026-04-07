@@ -65,11 +65,11 @@ body::before {
 /* ============================================================
    FLOATING ROBOT
    ============================================================ */
-#robo { position: fixed; bottom: 32px; right: 28px; z-index: 200; cursor: pointer; transition: transform .3s; user-select: none; }
+#robo { position: fixed; bottom: 24px; right: 24px; z-index: 200; cursor: pointer; transition: transform .3s; user-select: none; }
 #robo:hover { transform: scale(1.08); }
-#robo svg { width: 72px; height: auto; filter: drop-shadow(0 0 12px rgba(0,229,255,0.5)); }
-#robo-bubble { position: absolute; bottom: 84px; right: 0; background: var(--panel2); border: 1px solid var(--neon); padding: 10px 14px; width: 200px; font-family: var(--mono); font-size: 11px; color: var(--neon); line-height: 1.5; display: none; pointer-events: none; }
-#robo-bubble::after { content: ''; position: absolute; bottom: -6px; right: 20px; width: 10px; height: 10px; background: var(--panel2); border-right: 1px solid var(--neon); border-bottom: 1px solid var(--neon); transform: rotate(45deg); }
+#robo svg { width: 60px; height: auto; filter: drop-shadow(0 0 10px rgba(0,229,255,0.4)); }
+#robo-bubble { position: absolute; bottom: 68px; right: 0; background: var(--panel2); border: 1px solid var(--neon); padding: 10px 14px; width: 200px; font-family: var(--mono); font-size: 11px; color: var(--neon); line-height: 1.5; display: none; pointer-events: none; border-radius: 8px; }
+#robo-bubble::after { content: ''; position: absolute; bottom: -6px; right: 16px; width: 10px; height: 10px; background: var(--panel2); border-right: 1px solid var(--neon); border-bottom: 1px solid var(--neon); transform: rotate(45deg); }
 #robo.show-bubble #robo-bubble { display: block; }
 
 /* ============================================================
@@ -77,12 +77,15 @@ body::before {
    ============================================================ */
 nav { background: rgba(5,8,16,0.94); backdrop-filter: blur(24px); border-bottom: 1px solid var(--wire); position: sticky; top: 0; z-index: 100; }
 .nav-wrap { max-width: 1120px; margin: 0 auto; padding: 0 36px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; letter-spacing: -1px; color: var(--text); }
-.logo-name { font-size: 26px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; font-style: italic; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; letter-spacing: -1px; color: var(--text); text-decoration: none; padding: 6px 12px; border-radius: 4px; transition: all .2s; }
+.logo:hover { background: rgba(0,229,255,0.06); }
+.logo:active { background: rgba(0,229,255,0.15); }
+.logo:active .logo-ver { color: var(--neon); }
+.logo-name { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; font-style: italic; }
 .logo-ver { color: var(--text); }
 .logo-kex { color: var(--neon); }
 .nav-links { display: flex; gap: 28px; list-style: none; }
-.nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: .8px; color: var(--muted2); text-decoration: none; transition: color .2s; }
+.nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: .8px; color: #c8dce8; text-decoration: none; transition: color .2s; text-transform: uppercase; text-shadow: 0 0 8px rgba(0,229,255,0.12); }
 .nav-links a:hover { color: var(--neon); }
 .nav-cta { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; background: transparent; color: var(--neon); border: 1px solid var(--neon); padding: 9px 20px; cursor: pointer; transition: all .2s; position: relative; overflow: hidden; }
 .nav-cta::before { content: ''; position: absolute; inset: 0; background: var(--neon); transform: scaleX(0); transform-origin: left; transition: transform .25s; z-index: -1; }
@@ -320,6 +323,52 @@ footer { border-top: 1px solid var(--wire); padding: 26px 0; position: relative;
 .test-metric { font-family: var(--mono); font-size: 10px; color: var(--green); background: var(--green-dim); border: 1px solid rgba(0,255,136,0.2); padding: 3px 10px; flex-shrink: 0; }
 
 /* ============================================================
+   PROJECTS
+   ============================================================ */
+.proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.proj-card { background: var(--panel); border: 1px solid var(--wire); padding: 24px; position: relative; overflow: hidden; transition: border-color .3s; }
+.proj-card:hover { border-color: rgba(0,229,255,0.3); }
+.proj-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--neon), transparent); }
+.proj-status { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: var(--green); background: var(--green-dim); border: 1px solid rgba(0,255,136,0.2); padding: 2px 8px; margin-bottom: 12px; }
+.proj-client { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted2); margin-bottom: 8px; }
+.proj-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 10px; color: var(--text); }
+.proj-desc { font-size: 12px; line-height: 1.75; color: var(--muted2); margin-bottom: 16px; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.proj-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--neon); background: var(--neon3); border: 1px solid rgba(0,229,255,0.15); padding: 2px 8px; }
+.proj-metric { font-family: var(--mono); font-size: 11px; color: var(--muted2); border-top: 1px solid var(--wire); padding-top: 12px; }
+.proj-metric-val { font-size: 18px; font-weight: 900; color: var(--neon); letter-spacing: -1px; margin-right: 4px; }
+
+/* ============================================================
+   CONTACT FORM
+   ============================================================ */
+.contact-wrap { background: var(--panel); border: 1px solid var(--wire); position: relative; overflow: hidden; }
+.contact-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--neon), var(--pink), transparent); }
+.contact-form { padding: 32px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted2); }
+.form-input { background: var(--void2); border: 1px solid var(--edge); color: var(--text); font-family: var(--sans); font-size: 13px; padding: 10px 14px; outline: none; transition: border-color .2s; }
+.form-input:focus { border-color: var(--neon); box-shadow: 0 0 0 2px rgba(0,229,255,0.1); }
+.form-input::placeholder { color: var(--muted); }
+.form-textarea { resize: vertical; min-height: 100px; font-family: var(--sans); }
+.form-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+.form-note { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.5px; }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list { display: flex; flex-direction: column; gap: 1px; background: var(--wire); }
+.faq-item { background: var(--panel); transition: background .2s; }
+.faq-item[open] { background: var(--panel2); }
+.faq-q { list-style: none; padding: 18px 24px; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 14px; transition: color .2s; }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q:hover { color: var(--neon); }
+.faq-icon { font-family: var(--mono); font-size: 16px; color: var(--neon); width: 20px; flex-shrink: 0; text-align: center; transition: transform .2s; }
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+.faq-item[open] .faq-q { color: var(--neon); border-bottom: 1px solid var(--wire); }
+.faq-a { padding: 16px 24px 20px 58px; font-size: 13px; line-height: 1.8; color: var(--muted2); }
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
@@ -331,6 +380,9 @@ footer { border-top: 1px solid var(--wire); padding: 26px 0; position: relative;
   .proc-grid { grid-template-columns: 1fr; }
   .test-grid { grid-template-columns: 1fr; }
   .price-grid { grid-template-columns: 1fr; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-footer { flex-direction: column; align-items: flex-start; }
   .cta-inner { flex-direction: column; padding: 40px 32px; }
   .cta-right { align-items: flex-start; }
   .cta-note { text-align: left; }
