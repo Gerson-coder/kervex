@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://verkex.pe',
+  site: 'https://verkex.com',
   output: 'static',
   prefetch: true,
   integrations: [sitemap()],

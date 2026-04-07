@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://verkex.pe/sitemap-index.xml
+Sitemap: https://verkex.com/sitemap-index.xml
