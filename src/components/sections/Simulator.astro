@@ -1,0 +1,40 @@
+<div class="sec" id="sim" style="padding-top:0">
+  <div class="divrow"><span class="dl"></span><span class="dt">Simulador interactivo</span><span class="dl"></span></div>
+  <div class="shdr">
+    <div class="eyebrow">Prueba en vivo</div>
+    <h2 class="sh">Así trabaja <span class="neon">Kervex</span><br>en tu empresa</h2>
+    <p class="ssub">Selecciona un módulo y observa cómo Kervex automatiza el proceso en tiempo real.</p>
+  </div>
+  <div class="sim-wrap" style="position:relative">
+    <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
+    <div class="sim-header" id="simTabs">
+      <button class="sim-tab on" data-s="0">💬 WhatsApp</button>
+      <button class="sim-tab" data-s="1">🧾 Facturación</button>
+      <button class="sim-tab" data-s="2">📊 Reportes</button>
+      <button class="sim-tab" data-s="3">💸 Cobranzas</button>
+    </div>
+    <div class="sim-body">
+      <div class="sim-left">
+        <div id="flowContainer"></div>
+      </div>
+      <div class="sim-right">
+        <div class="sim-metric-card">
+          <div class="smc-label" id="metLabel">Tiempo ahorrado</div>
+          <div class="smc-val" id="metVal">3h</div>
+          <div class="smc-sub" id="metSub">por día vs proceso manual</div>
+        </div>
+        <div class="sim-bar-wrap">
+          <div class="sim-bar-label"><span id="barLabel">Eficiencia del flujo</span><span id="barPct">0%</span></div>
+          <div class="sim-bar"><div class="sim-bar-fill" id="barFill" style="width:0%"></div></div>
+        </div>
+        <div class="sim-bar-wrap">
+          <div class="sim-bar-label"><span>Reducción de errores</span><span id="errPct">0%</span></div>
+          <div class="sim-bar"><div class="sim-bar-fill" id="errFill" style="width:0%;background:#00ff88"></div></div>
+        </div>
+        <div class="sim-log" id="simLog">
+          <span class="log-line dim">// Selecciona un módulo para iniciar...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

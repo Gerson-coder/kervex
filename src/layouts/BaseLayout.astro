@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Kervex — Automatización Inteligente para PYMEs en Lima',
+  description = 'Kervex automatiza procesos de tu empresa: WhatsApp 24/7, facturación SUNAT, dashboards y RPA. Desde S/. 350/mes.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts: Exo 2 + Share Tech Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,200;0,300;0,400;0,600;0,800;0,900;1,300&family=Share+Tech+Mono&display=swap" />
+
+    <!-- OG tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_PE" />
+    <meta name="robots" content="index, follow" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

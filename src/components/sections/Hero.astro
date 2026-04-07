@@ -1,0 +1,48 @@
+---
+import RobotSvg from '../shared/RobotSvg.astro';
+---
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eye-line"></div>
+      <span class="eye-txt">Lima, Perú · Sistema activo</span>
+      <div class="eye-badge">● online</div>
+    </div>
+    <h1>Automatiza<br><span class="neon">sin límites.</span><br><span class="outline">Opera.</span></h1>
+    <p class="hero-sub">Kervex transforma procesos manuales en flujos inteligentes. Cada mensaje respondido, cada factura emitida, cada reporte generado — sin intervención humana.</p>
+    <div class="hero-btns">
+      <button class="btn-neon">Agenda diagnóstico gratis</button>
+      <button class="btn-out">Ver simulador →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">60%</div><div class="hs-l">menos manual</div></div>
+      <div class="hs"><div class="hs-n">3h</div><div class="hs-l">por día libres</div></div>
+      <div class="hs"><div class="hs-n">&lt;3m</div><div class="hs-l">ROI en meses</div></div>
+    </div>
+  </div>
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hc-scan"></div>
+    <div class="hc-top">
+      <span class="hc-title">Kervex · simulación activa</span>
+      <div class="hc-dots"><div class="hcd"></div><div class="hcd"></div><div class="hcd"></div></div>
+    </div>
+    <div class="robot-center">
+      <div class="main-robot">
+        <RobotSvg />
+      </div>
+      <div class="robot-shadow-el"></div>
+    </div>
+    <!-- CHAT -->
+    <div class="wsp-sim">
+      <div class="wsp-header">
+        <span class="wsp-title">WhatsApp · flujo en vivo</span>
+        <div class="wsp-live"><span class="wsp-dot"></span>procesando</div>
+      </div>
+      <div class="chat-area" id="chatArea"></div>
+      <div class="chat-status" id="chatStatus">Sistema Kervex activo · respuesta automática</div>
+    </div>
+  </div>
+</section>
