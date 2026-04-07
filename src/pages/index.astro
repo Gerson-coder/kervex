@@ -6,6 +6,7 @@ import Hero from '../components/sections/Hero.astro';
 import Problems from '../components/sections/Problems.astro';
 import Simulator from '../components/sections/Simulator.astro';
 import Process from '../components/sections/Process.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
 import Pricing from '../components/sections/Pricing.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -19,8 +20,60 @@ import Footer from '../components/layout/Footer.astro';
     <Problems />
     <Simulator />
     <Process />
+    <Testimonials />
     <Pricing />
     <CtaBand />
   </div>
   <Footer />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Verkex",
+    "url": "https://verkex.pe",
+    "logo": "https://verkex.pe/favicon.svg",
+    "description": "Automatización de procesos empresariales con inteligencia artificial para PYMEs en Lima, Perú",
+    "areaServed": { "@type": "City", "name": "Lima", "addressCountry": "PE" },
+    "priceRange": "S/. 350 - S/. 1,800/mes",
+    "knowsAbout": ["Automatización de procesos", "Inteligencia artificial", "RPA", "Chatbot WhatsApp", "Facturación electrónica SUNAT", "Dashboards empresariales", "Optimización operacional"]
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Verkex",
+    "description": "Automatización inteligente con IA para PYMEs en Lima",
+    "address": { "@type": "PostalAddress", "addressLocality": "Lima", "addressRegion": "Lima", "addressCountry": "PE" },
+    "geo": { "@type": "GeoCoordinates", "latitude": -12.0464, "longitude": -77.0428 },
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "priceRange": "S/. 350 - S/. 1,800"
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta automatizar mi empresa con inteligencia artificial en Lima?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Verkex ofrece planes de automatización con IA desde S/. 350 al mes para PYMEs en Lima. Incluye implementación, capacitación y soporte. Sin contrato de permanencia." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué procesos puede automatizar Verkex con IA?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Verkex automatiza WhatsApp con chatbot inteligente 24/7, facturación electrónica SUNAT, dashboards en tiempo real, cobranzas automáticas, reportes con análisis predictivo y tareas repetitivas con RPA e inteligencia artificial." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto tiempo tarda la implementación de la automatización?",
+        "acceptedAnswer": { "@type": "Answer", "text": "La implementación tarda entre 3 y 5 días. Incluye diagnóstico gratuito de 30 minutos, diseño del flujo personalizado, activación y capacitación del equipo. ROI visible desde el primer mes." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Verkex usa inteligencia artificial real o solo reglas?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Verkex combina automatización basada en reglas con inteligencia artificial avanzada: NLP para clasificar mensajes de WhatsApp, análisis predictivo para reportes, y machine learning para optimizar flujos de trabajo continuamente." }
+      }
+    ]
+  })} />
 </BaseLayout>

@@ -5,7 +5,7 @@ if (robo && bubble) {
   const msgs = [
     '\u00a1Hola! Soy Ker, tu asistente de automatizaci\u00f3n \ud83e\udd16',
     '\u00bfListo para automatizar tu empresa?',
-    'Kervex puede ahorrarle 3h diarias a tu equipo',
+    'Verkex puede ahorrarle 3h diarias a tu equipo',
     'Tenemos un diagn\u00f3stico GRATIS para ti \ud83c\udf81',
     '\u00bfVes el simulador? Pru\u00e9balo ahora \u2192',
     'Lima tiene miles de empresas sin automatizar...',

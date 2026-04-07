@@ -4,12 +4,18 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalURL?: string;
+  ogImage?: string;
 }
 
 const {
-  title = 'Kervex — Automatización Inteligente para PYMEs en Lima',
-  description = 'Kervex automatiza procesos de tu empresa: WhatsApp 24/7, facturación SUNAT, dashboards y RPA. Desde S/. 350/mes.',
+  title = 'Verkex — Automatización Inteligente con IA para PYMEs en Lima, Perú',
+  description = 'Verkex automatiza los procesos de tu empresa con inteligencia artificial: WhatsApp 24/7, facturación SUNAT automática, dashboards en tiempo real, RPA y optimización operacional. Desde S/. 350/mes. Diagnóstico gratuito.',
+  canonicalURL = 'https://verkex.pe',
+  ogImage = 'https://verkex.pe/og-image.png',
 } = Astro.props;
+
+const fullTitle = title.includes('Verkex') ? title : `${title} | Verkex — Automatización con IA`;
 ---
 
 <!doctype html>
@@ -17,8 +23,12 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+
+    <!-- SEO primario -->
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="automatización empresarial Lima, automatización de procesos Perú, inteligencia artificial para PYMEs, optimización de procesos, automatización WhatsApp empresas, facturación electrónica SUNAT automática, RPA para PYMEs Lima, dashboards empresariales tiempo real, software automatización Perú, chatbot WhatsApp negocios, transformación digital PYMEs, reducción costos operativos, automatización cobranzas, ERP automatizado Lima, inteligencia artificial negocios Perú, machine learning empresas, automatización flujos de trabajo, optimización operacional, digitalización empresas peruanas, software gestión empresarial Lima" />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Fonts: Exo 2 + Share Tech Mono -->
@@ -26,12 +36,31 @@ const {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,200;0,300;0,400;0,600;0,800;0,900;1,300&family=Share+Tech+Mono&display=swap" />
 
-    <!-- OG tags -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="es_PE" />
-    <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content="Verkex" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Geo targeting Perú -->
+    <meta name="geo.region" content="PE-LIM" />
+    <meta name="geo.placename" content="Lima, Peru" />
+    <meta name="geo.position" content="-12.0464;-77.0428" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- Tema -->
+    <meta name="theme-color" content="#050810" />
   </head>
   <body>
     <slot />

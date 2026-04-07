@@ -1,0 +1,723 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,200;0,300;0,400;0,600;0,800;0,900;1,300&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --void:#050810;
+  --void2:#080c18;
+  --panel:#0c1020;
+  --panel2:#101428;
+  --edge:#1a2040;
+  --edge2:#202850;
+  --neon:#00e5ff;
+  --neon2:#00b8d4;
+  --neon3:rgba(0,229,255,0.08);
+  --neon4:rgba(0,229,255,0.04);
+  --pink:#ff0aff;
+  --pink-dim:rgba(255,10,255,0.08);
+  --green:#00ff88;
+  --green-dim:rgba(0,255,136,0.08);
+  --text:#e0f4ff;
+  --muted:#4a6880;
+  --muted2:#6a8faa;
+  --wire:rgba(0,229,255,0.1);
+  --wire2:rgba(0,229,255,0.05);
+  --sans:'Exo 2',sans-serif;
+  --mono:'Share Tech Mono',monospace
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+
+/* GRID OVERLAY */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+/* CORNER BRACKETS */
+.bracket{position:absolute;width:16px;height:16px;pointer-events:none}
+.bracket.tl{top:0;left:0;border-top:2px solid var(--neon);border-left:2px solid var(--neon)}
+.bracket.tr{top:0;right:0;border-top:2px solid var(--neon);border-right:2px solid var(--neon)}
+.bracket.bl{bottom:0;left:0;border-bottom:2px solid var(--neon);border-left:2px solid var(--neon)}
+.bracket.br{bottom:0;right:0;border-bottom:2px solid var(--neon);border-right:2px solid var(--neon)}
+
+/* FLOATING ROBOT */
+#robo{position:fixed;bottom:32px;right:28px;z-index:200;cursor:pointer;transition:transform .3s;user-select:none}
+#robo:hover{transform:scale(1.08)}
+#robo svg{width:72px;height:auto;filter:drop-shadow(0 0 12px rgba(0,229,255,0.5))}
+#robo-bubble{position:absolute;bottom:84px;right:0;background:var(--panel2);border:1px solid var(--neon);padding:10px 14px;width:200px;font-family:var(--mono);font-size:11px;color:var(--neon);line-height:1.5;display:none;pointer-events:none}
+#robo-bubble::after{content:'';position:absolute;bottom:-6px;right:20px;width:10px;height:10px;background:var(--panel2);border-right:1px solid var(--neon);border-bottom:1px solid var(--neon);transform:rotate(45deg)}
+#robo.show-bubble #robo-bubble{display:block}
+
+/* NAV */
+nav{background:rgba(5,8,16,0.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--wire);position:sticky;top:0;z-index:100}
+.nav-wrap{max-width:1120px;margin:0 auto;padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-1px;color:var(--text);text-transform:uppercase}
+.logo-k{color:var(--neon);font-style:italic}
+.logo-badge{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--neon);border:1px solid rgba(0,229,255,0.3);padding:2px 6px;margin-left:2px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.8px;color:var(--muted2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--neon)}
+.nav-cta{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--neon);border:1px solid var(--neon);padding:9px 20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;inset:0;background:var(--neon);transform:scaleX(0);transform-origin:left;transition:transform .25s;z-index:-1}
+.nav-cta:hover{color:var(--void)}
+.nav-cta:hover::before{transform:scaleX(1)}
+
+/* LAYOUT */
+.wrap{max-width:1120px;margin:0 auto;padding:0 36px;position:relative;z-index:1}
+
+/* HERO */
+.hero{padding:80px 0 60px;display:grid;grid-template-columns:1fr 460px;gap:60px;align-items:center}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.eye-line{width:20px;height:2px;background:var(--neon)}
+.eye-txt{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--neon)}
+.eye-badge{font-family:var(--mono);font-size:9px;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,255,136,0.2);padding:2px 8px;animation:gblink 2s ease infinite}
+@keyframes gblink{0%,100%{opacity:1}50%{opacity:.5}}
+.hero h1{font-size:clamp(40px,5vw,72px);font-weight:900;line-height:1.0;letter-spacing:-3px;margin-bottom:18px;text-transform:uppercase}
+.hero h1 .neon{color:var(--neon);text-shadow:0 0 30px rgba(0,229,255,0.4)}
+.hero h1 .outline{-webkit-text-stroke:1.5px rgba(0,229,255,0.4);color:transparent}
+.hero-sub{font-size:14px;line-height:1.8;color:var(--muted2);max-width:460px;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.btn-neon{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;background:var(--neon);color:var(--void);border:none;padding:13px 28px;cursor:pointer;font-weight:700;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px)}
+.btn-neon:hover{background:#40eeff;box-shadow:0 0 20px rgba(0,229,255,0.4)}
+.btn-out{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--neon);border:1px solid rgba(0,229,255,0.3);padding:13px 28px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.btn-out:hover{border-color:var(--neon);background:var(--neon3)}
+.hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+.hs{padding-right:28px;border-right:1px solid var(--wire)}
+.hs:last-child{border-right:none;padding-right:0}
+.hs-n{font-size:32px;font-weight:900;letter-spacing:-2px;color:var(--neon);line-height:1}
+.hs-l{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-top:2px}
+
+/* HERO ROBOT CARD */
+.hero-card{background:var(--panel);border:1px solid var(--wire);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--neon),var(--pink),transparent)}
+.hc-scan{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.6),transparent);animation:scan 3s linear infinite;pointer-events:none}
+@keyframes scan{0%{top:0;opacity:1}80%{opacity:.3}100%{top:100%;opacity:0}}
+.hc-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--wire);background:var(--void2)}
+.hc-title{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--neon)}
+.hc-dots{display:flex;gap:5px}
+.hcd{width:8px;height:8px}
+.hcd:nth-child(1){background:#ff5f57}
+.hcd:nth-child(2){background:#ffbd2e}
+.hcd:nth-child(3){background:#28ca41}
+
+/* ROBOT CENTER */
+.robot-center{display:flex;justify-content:center;padding:20px 0 4px;position:relative}
+.main-robot{width:120px;animation:hover3d 4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(0,229,255,0.35))}
+@keyframes hover3d{0%,100%{transform:translateY(0) rotateY(0deg)}25%{transform:translateY(-8px) rotateY(5deg)}75%{transform:translateY(-5px) rotateY(-5deg)}}
+.robot-shadow-el{width:70px;height:10px;background:rgba(0,229,255,0.15);border-radius:50%;margin:0 auto 8px;filter:blur(5px);animation:hovershad 4s ease-in-out infinite}
+@keyframes hovershad{0%,100%{transform:scaleX(1);opacity:.5}50%{transform:scaleX(.5);opacity:.15}}
+
+/* WSP SIMULATOR */
+.wsp-sim{padding:0 16px 16px}
+.wsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.wsp-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2)}
+.wsp-live{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,255,136,0.2);padding:2px 8px}
+.wsp-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:gblink 1.5s ease infinite}
+.chat-area{background:var(--void2);border:1px solid var(--wire2);padding:10px;min-height:180px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.chat-msg{max-width:78%;padding:7px 10px;font-size:11px;line-height:1.5;animation:msgpop .3s ease}
+@keyframes msgpop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.chat-msg.user{background:var(--panel2);border:1px solid var(--wire2);color:var(--text);align-self:flex-start;border-radius:0 8px 8px 8px}
+.chat-msg.bot{background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);color:var(--neon);align-self:flex-end;border-radius:8px 0 8px 8px;font-family:var(--mono);font-size:10px}
+.chat-msg.typing{background:var(--panel2);border:1px solid var(--wire2);align-self:flex-end;padding:10px 14px}
+.typing-dots{display:flex;gap:3px;align-items:center}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--neon);animation:tdot .9s ease infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.chat-status{font-family:var(--mono);font-size:9px;color:var(--green);text-align:center;padding:4px 0;border-top:1px solid var(--wire2);margin-top:4px}
+
+/* SECTIONS */
+.sec{padding:80px 0}
+.divrow{display:flex;align-items:center;gap:14px;margin-bottom:48px}
+.dl{flex:1;height:1px;background:var(--wire)}
+.dt{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:10px}
+.sh{font-size:clamp(28px,4vw,50px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:12px;text-transform:uppercase}
+.sh .neon{color:var(--neon)}
+.ssub{font-size:13px;color:var(--muted2);max-width:500px;line-height:1.75;font-weight:300}
+.shdr{margin-bottom:44px}
+
+/* INTERACTIVE SIMULATOR — main feature */
+.sim-wrap{background:var(--panel);border:1px solid var(--wire);position:relative;overflow:hidden}
+.sim-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--neon),transparent)}
+.sim-header{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--wire);background:var(--void2)}
+.sim-tab{font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted2);padding:12px 22px;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid var(--wire)}
+.sim-tab:last-child{border-right:none}
+.sim-tab.on{color:var(--neon);border-bottom-color:var(--neon);background:var(--neon3)}
+.sim-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--wire)}
+.sim-left{background:var(--panel);padding:32px}
+.sim-right{background:var(--void2);padding:32px;display:flex;flex-direction:column;gap:16px}
+.sim-panel{display:none}.sim-panel.on{display:contents}
+
+/* FLOW BUILDER */
+.flow-builder{display:flex;flex-direction:column;gap:3px}
+.fb-step{display:flex;align-items:stretch;gap:0}
+.fb-left{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.fb-node{width:14px;height:14px;border-radius:50%;border:2px solid var(--edge2);background:var(--void);flex-shrink:0;z-index:1;transition:all .3s;margin-top:8px}
+.fb-node.done{background:var(--neon);border-color:var(--neon);box-shadow:0 0 10px rgba(0,229,255,0.5)}
+.fb-node.act{background:var(--void);border-color:var(--neon);box-shadow:0 0 0 4px rgba(0,229,255,0.15);animation:nodeact 1.2s ease infinite}
+@keyframes nodeact{0%,100%{box-shadow:0 0 0 4px rgba(0,229,255,0.15)}50%{box-shadow:0 0 0 8px rgba(0,229,255,0.05)}}
+.fb-line{width:2px;flex:1;background:var(--edge2);transition:background .3s}
+.fb-line.done{background:var(--neon)}
+.fb-content{flex:1;background:var(--void2);border:1px solid var(--edge2);margin-left:8px;margin-bottom:3px;padding:10px 14px;transition:all .3s}
+.fb-content.done{border-color:rgba(0,229,255,0.2);background:rgba(0,229,255,0.04)}
+.fb-content.act{border-color:var(--neon);background:rgba(0,229,255,0.08)}
+.fb-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fb-title{font-size:12px;font-weight:600;color:var(--muted2);line-height:1.3;transition:color .3s}
+.fb-title.on{color:var(--text)}
+.fb-sub{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:3px}
+.fb-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;flex-shrink:0}
+.fb-badge.done{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,255,136,0.2)}
+.fb-badge.act{color:var(--neon);background:var(--neon3);border:1px solid rgba(0,229,255,0.3);animation:gblink 1s infinite}
+.fb-badge.wait{color:var(--muted);background:var(--wire2);border:1px solid var(--edge2)}
+
+/* SIM RIGHT — metrics live */
+.sim-metric-card{background:var(--panel);border:1px solid var(--wire);padding:18px 20px;position:relative;overflow:hidden}
+.sim-metric-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--neon)}
+.smc-label{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+.smc-val{font-size:28px;font-weight:900;letter-spacing:-1.5px;color:var(--neon);line-height:1}
+.smc-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px}
+.sim-bar-wrap{background:var(--panel);border:1px solid var(--wire);padding:16px 20px}
+.sim-bar-label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--muted2);margin-bottom:8px}
+.sim-bar{height:4px;background:var(--edge2);position:relative;overflow:hidden}
+.sim-bar-fill{height:100%;background:var(--neon);transition:width 1s ease;box-shadow:0 0 6px rgba(0,229,255,0.5)}
+.sim-log{background:var(--panel);border:1px solid var(--wire);padding:12px 16px;font-family:var(--mono);font-size:10px;flex:1;overflow:hidden}
+.log-line{color:var(--muted2);line-height:1.8;display:block}
+.log-line.ok{color:var(--green)}
+.log-line.act{color:var(--neon)}
+.log-line.dim{color:var(--muted)}
+
+/* PROBLEMS */
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--wire)}
+.pc{background:var(--panel);padding:28px 24px;position:relative;cursor:default;transition:background .2s;overflow:hidden}
+.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(to top,rgba(0,229,255,0.06),transparent);transition:height .3s}
+.pc:hover::after{height:100%}
+.pc:hover{background:var(--panel2)}
+.pc-num{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px}
+.pc-icon{width:42px;height:42px;background:var(--void2);border:1px solid var(--wire);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px;clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px)}
+.pc-t{font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-.2px}
+.pc-p{font-size:11px;line-height:1.7;color:var(--muted2)}
+
+/* PROCESS */
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.pg{background:var(--panel);border:1px solid var(--wire);padding:30px 24px;position:relative;overflow:hidden;transition:border-color .3s}
+.pg:hover{border-color:rgba(0,229,255,0.4)}
+.pg-glow{position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);pointer-events:none}
+.pg-n{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:14px}
+.pg-big{font-size:56px;font-weight:900;color:rgba(0,229,255,0.05);letter-spacing:-3px;line-height:1;position:absolute;top:14px;right:14px}
+.pg h3{font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
+.pg p{font-size:12px;line-height:1.75;color:var(--muted2)}
+.pg-time{display:inline-flex;align-items:center;gap:5px;margin-top:14px;font-family:var(--mono);font-size:9px;color:var(--neon);background:var(--neon3);border:1px solid rgba(0,229,255,0.15);padding:3px 10px}
+
+/* PRICING */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.plan{background:var(--panel);border:1px solid var(--wire);padding:28px 24px;position:relative;transition:all .2s}
+.plan:hover{border-color:rgba(0,229,255,0.3);transform:translateY(-2px)}
+.plan.feat{background:var(--void2);border-color:var(--neon)}
+.plan.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--neon),var(--pink),var(--neon))}
+.feat-tag{position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--void);background:var(--neon);padding:3px 8px;font-weight:700}
+.pl-name{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);display:block;margin-bottom:14px}
+.pl-price{font-size:36px;font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:3px}
+.plan.feat .pl-price{color:var(--neon)}
+.pl-price sub{font-size:13px;font-weight:300;letter-spacing:0;vertical-align:middle;color:var(--muted2)}
+.pl-per{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:20px}
+.pl-feats{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px}
+.pf{font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pf-m{font-family:var(--mono);font-size:10px;flex-shrink:0;margin-top:1px;color:var(--edge2)}
+.pf.on{color:var(--text)}
+.pf.on .pf-m{color:var(--neon)}
+.pl-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--edge2);color:var(--muted2);font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.pl-btn:hover{border-color:var(--neon);color:var(--neon);background:var(--neon3)}
+.plan.feat .pl-btn{background:var(--neon);border-color:var(--neon);color:var(--void);font-weight:700}
+.plan.feat .pl-btn:hover{background:#40eeff}
+
+/* CTA */
+.cta-band{padding:0 0 80px}
+.cta-inner{background:var(--panel);border:1px solid var(--wire);padding:60px 56px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:48px}
+.cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--neon),var(--pink),transparent)}
+.cta-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.cta-h{font-size:clamp(24px,3vw,40px);font-weight:900;letter-spacing:-2px;line-height:1.05;text-transform:uppercase;position:relative;z-index:1}
+.cta-h .neon{color:var(--neon)}
+.cta-sub{font-size:12px;color:var(--muted2);margin-top:10px;line-height:1.7;position:relative;z-index:1}
+.cta-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0;position:relative;z-index:1}
+.cta-note{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:right}
+
+/* FOOTER */
+footer{border-top:1px solid var(--wire);padding:26px 0;position:relative;z-index:1}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.foot-logo{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;display:flex;align-items:center;gap:8px}
+.foot-txt{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;gap:36px;padding:56px 0 48px}
+  .sim-body{grid-template-columns:1fr}
+  .sim-right{display:none}
+  .prob-grid{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .cta-inner{flex-direction:column;padding:40px 32px}
+  .cta-right{align-items:flex-start}
+  .cta-note{text-align:left}
+}
+@media(max-width:560px){
+  .nav-wrap,.wrap{padding:0 20px}
+  .hero{padding:44px 0 40px}
+  .hero-btns{flex-direction:column}
+  .btn-neon,.btn-out{width:100%;justify-content:center;text-align:center}
+  .prob-grid{grid-template-columns:1fr}
+  .hero-stats{gap:16px}
+  .hs{padding-right:16px}
+  .cta-band{padding:0 0 60px}
+}
+</style>
+
+<!-- FLOATING ROBOT -->
+<div id="robo">
+  <div id="robo-bubble" id="rbubble"></div>
+  <svg viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="40" y1="3" x2="40" y2="11" stroke="#00e5ff" stroke-width="2"/>
+    <circle cx="40" cy="3" r="3.5" fill="#00e5ff"><animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/></circle>
+    <rect x="14" y="11" width="52" height="38" rx="8" fill="#0c1020" stroke="#00e5ff" stroke-width="1.5"/>
+    <rect x="20" y="17" width="40" height="16" rx="4" fill="#050810" stroke="rgba(0,229,255,0.4)" stroke-width=".8"/>
+    <circle cx="30" cy="25" r="4" fill="#050810" stroke="rgba(0,229,255,0.3)" stroke-width=".5"/>
+    <circle cx="50" cy="25" r="4" fill="#050810" stroke="rgba(0,229,255,0.3)" stroke-width=".5"/>
+    <circle cx="30" cy="25" r="2.5" fill="#00e5ff"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="50" cy="25" r="2.5" fill="#00e5ff"><animate attributeName="opacity" values="1;0.3;1" dur="2s" begin=".5s" repeatCount="indefinite"/></circle>
+    <rect x="24" y="39" width="32" height="5" rx="2" fill="#050810"/>
+    <rect x="26" y="40" width="8" height="3" rx="1" fill="#00e5ff" opacity=".7"><animate attributeName="x" values="26;44;26" dur="1.8s" repeatCount="indefinite"/></rect>
+    <rect x="36" y="48" width="8" height="4" rx="2" fill="#0c1020" stroke="#1a2040" stroke-width="1"/>
+    <rect x="10" y="52" width="14" height="28" rx="5" fill="#0c1020" stroke="#1a2040" stroke-width="1.5"/>
+    <circle cx="17" cy="82" r="4.5" fill="#101428" stroke="#00e5ff" stroke-width="1"/>
+    <rect x="56" y="52" width="14" height="28" rx="5" fill="#0c1020" stroke="#1a2040" stroke-width="1.5"/>
+    <circle cx="63" cy="82" r="4.5" fill="#101428" stroke="#00e5ff" stroke-width="1"/>
+    <rect x="18" y="52" width="44" height="36" rx="7" fill="#0c1020" stroke="#1a2040" stroke-width="1.5"/>
+    <rect x="24" y="58" width="32" height="20" rx="3" fill="#050810" stroke="rgba(0,229,255,0.2)" stroke-width=".8"/>
+    <circle cx="30" cy="65" r="2.5" fill="#00ff88"><animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="40" cy="65" r="2.5" fill="#00e5ff"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.1s" repeatCount="indefinite"/></circle>
+    <circle cx="50" cy="65" r="2.5" fill="#ff0aff"><animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/></circle>
+    <rect x="26" y="71" width="28" height="3" rx="1" fill="#1a2040"/>
+    <rect x="26" y="71" width="16" height="3" rx="1" fill="#00e5ff" opacity=".7"><animate attributeName="width" values="8;26;8" dur="2.5s" repeatCount="indefinite"/></rect>
+    <rect x="26" y="86" width="12" height="5" rx="2" fill="#1a2040"/>
+    <rect x="42" y="86" width="12" height="5" rx="2" fill="#1a2040"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <div class="logo"><span class="logo-k">K</span>ERVEX<span class="logo-badge">v2.5</span></div>
+    <ul class="nav-links">
+      <li><a href="#prob">Sistema</a></li>
+      <li><a href="#sim">Simulador</a></li>
+      <li><a href="#proc">Proceso</a></li>
+      <li><a href="#price">Planes</a></li>
+    </ul>
+    <button class="nav-cta">Iniciar diagnóstico</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eye-line"></div>
+      <span class="eye-txt">Lima, Perú · Sistema activo</span>
+      <div class="eye-badge">● online</div>
+    </div>
+    <h1>Automatiza<br><span class="neon">sin límites.</span><br><span class="outline">Opera.</span></h1>
+    <p class="hero-sub">Kervex transforma procesos manuales en flujos inteligentes. Cada mensaje respondido, cada factura emitida, cada reporte generado — sin intervención humana.</p>
+    <div class="hero-btns">
+      <button class="btn-neon">Agenda diagnóstico gratis</button>
+      <button class="btn-out">Ver simulador →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">60%</div><div class="hs-l">menos manual</div></div>
+      <div class="hs"><div class="hs-n">3h</div><div class="hs-l">por día libres</div></div>
+      <div class="hs"><div class="hs-n">&lt;3m</div><div class="hs-l">ROI en meses</div></div>
+    </div>
+  </div>
+
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hc-scan"></div>
+    <div class="hc-top">
+      <span class="hc-title">Kervex · simulación activa</span>
+      <div class="hc-dots"><div class="hcd"></div><div class="hcd"></div><div class="hcd"></div></div>
+    </div>
+    <div class="robot-center">
+      <div class="main-robot">
+        <svg viewBox="0 0 120 146" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="4" x2="60" y2="16" stroke="#00e5ff" stroke-width="2.5"/>
+          <circle cx="60" cy="4" r="5" fill="#00e5ff"><animate attributeName="r" values="5;7;5" dur="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.4;1" dur="1s" repeatCount="indefinite"/></circle>
+          <ellipse cx="60" cy="4" rx="14" ry="4" stroke="rgba(0,229,255,0.3)" stroke-width="1" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 60 4" to="360 60 4" dur="4s" repeatCount="indefinite"/></ellipse>
+          <rect x="18" y="16" width="84" height="58" rx="12" fill="#0c1020" stroke="#00e5ff" stroke-width="2"/>
+          <rect x="26" y="24" width="68" height="26" rx="6" fill="#050810" stroke="rgba(0,229,255,0.5)" stroke-width="1"/>
+          <rect x="32" y="29" width="22" height="16" rx="4" fill="#050810" stroke="rgba(0,229,255,0.2)" stroke-width=".5"/>
+          <rect x="66" y="29" width="22" height="16" rx="4" fill="#050810" stroke="rgba(0,229,255,0.2)" stroke-width=".5"/>
+          <rect x="35" y="32" width="16" height="10" rx="3" fill="#00e5ff" opacity=".15"/>
+          <rect x="69" y="32" width="16" height="10" rx="3" fill="#00e5ff" opacity=".15"/>
+          <rect x="37" y="34" width="12" height="6" rx="2" fill="#00e5ff"><animate attributeName="width" values="12;3;12" dur="3s" repeatCount="indefinite"/><animate attributeName="x" values="37;43;37" dur="3s" repeatCount="indefinite"/></rect>
+          <rect x="71" y="34" width="12" height="6" rx="2" fill="#00e5ff"><animate attributeName="width" values="12;3;12" dur="3s" begin=".5s" repeatCount="indefinite"/><animate attributeName="x" values="71;77;71" dur="3s" begin=".5s" repeatCount="indefinite"/></rect>
+          <rect x="30" y="57" width="60" height="9" rx="4" fill="#050810"/>
+          <rect x="32" y="58" width="10" height="7" rx="3" fill="#00e5ff" opacity=".6"><animate attributeName="x" values="32;74;32" dur="2.2s" repeatCount="indefinite"/></rect>
+          <rect x="46" y="58" width="7" height="7" rx="3" fill="#ff0aff" opacity=".4"/>
+          <rect x="72" y="58" width="10" height="7" rx="3" fill="#00e5ff" opacity=".6"><animate attributeName="x" values="72;30;72" dur="2.2s" repeatCount="indefinite"/></rect>
+          <rect x="52" y="74" width="16" height="8" rx="3" fill="#0c1020" stroke="#1a2040" stroke-width="1"/>
+          <rect x="8" y="80" width="18" height="38" rx="8" fill="#0c1020" stroke="#1a2040" stroke-width="2"/>
+          <circle cx="17" cy="121" r="7" fill="#101428" stroke="#00e5ff" stroke-width="1.5"/>
+          <rect x="94" y="80" width="18" height="38" rx="8" fill="#0c1020" stroke="#1a2040" stroke-width="2"/>
+          <circle cx="103" cy="121" r="7" fill="#101428" stroke="#00e5ff" stroke-width="1.5"/>
+          <rect x="18" y="82" width="84" height="58" rx="10" fill="#0c1020" stroke="#1a2040" stroke-width="2"/>
+          <rect x="28" y="92" width="64" height="36" rx="5" fill="#050810" stroke="rgba(0,229,255,0.15)" stroke-width="1"/>
+          <circle cx="40" cy="104" r="5" fill="#00ff88"><animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
+          <circle cx="60" cy="104" r="5" fill="#00e5ff"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.1s" repeatCount="indefinite"/></circle>
+          <circle cx="80" cy="104" r="5" fill="#ff0aff"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
+          <rect x="32" y="115" width="56" height="6" rx="2" fill="#1a2040"/>
+          <rect x="32" y="115" width="36" height="6" rx="2" fill="#00e5ff" opacity=".6"><animate attributeName="width" values="12;52;12" dur="3s" repeatCount="indefinite"/></rect>
+          <rect x="34" y="138" width="20" height="8" rx="3" fill="#1a2040"/>
+          <rect x="66" y="138" width="20" height="8" rx="3" fill="#1a2040"/>
+          <circle cx="24" cy="92" r="3" fill="#1a2040" stroke="#00e5ff" stroke-width=".8"/>
+          <circle cx="96" cy="92" r="3" fill="#1a2040" stroke="#00e5ff" stroke-width=".8"/>
+        </svg>
+      </div>
+      <div class="robot-shadow-el"></div>
+    </div>
+    <!-- CHAT -->
+    <div class="wsp-sim">
+      <div class="wsp-header">
+        <span class="wsp-title">WhatsApp · flujo en vivo</span>
+        <div class="wsp-live"><span class="wsp-dot"></span>procesando</div>
+      </div>
+      <div class="chat-area" id="chatArea"></div>
+      <div class="chat-status" id="chatStatus">Sistema Kervex activo · respuesta automática</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<div class="sec" id="prob" style="padding-top:40px">
+  <div class="divrow"><span class="dl"></span><span class="dt">Diagnóstico del sistema</span><span class="dl"></span></div>
+  <div class="shdr">
+    <div class="eyebrow">Errores detectados</div>
+    <h2 class="sh">Lo que frena tu<br><span class="neon">empresa hoy</span></h2>
+  </div>
+  <div class="prob-grid">
+    <div class="pc"><div class="pc-num">ERR:01</div><div class="pc-icon">💬</div><div class="pc-t">WhatsApp sin control</div><p class="pc-p">Atención manual, fuera de horario es silencio. Tu competencia responde en segundos.</p></div>
+    <div class="pc"><div class="pc-num">ERR:02</div><div class="pc-icon">🧾</div><div class="pc-t">Facturas manuales</div><p class="pc-p">15 min por factura. Con 20 al día, son 5 horas perdidas en burocracia pura.</p></div>
+    <div class="pc"><div class="pc-num">ERR:03</div><div class="pc-icon">📊</div><div class="pc-t">Excel desactualizado</div><p class="pc-p">Decisiones con datos de ayer. Sin visibilidad en tiempo real de lo que importa.</p></div>
+    <div class="pc"><div class="pc-num">ERR:04</div><div class="pc-icon">📦</div><div class="pc-t">Inventario a ciegas</div><p class="pc-p">Sin alertas de stock bajo. Vendes lo que no tienes. Pierdes lo que no ves.</p></div>
+    <div class="pc"><div class="pc-num">ERR:05</div><div class="pc-icon">💸</div><div class="pc-t">Cobranzas olvidadas</div><p class="pc-p">Deudas vencidas porque nadie tuvo tiempo de hacer seguimiento esta semana.</p></div>
+    <div class="pc"><div class="pc-num">ERR:06</div><div class="pc-icon">🔁</div><div class="pc-t">Tareas infinitas</div><p class="pc-p">Tu equipo repite lo mismo cada día. Talento brillante desperdiciado en copy-paste.</p></div>
+  </div>
+</div>
+
+<!-- INTERACTIVE SIMULATOR -->
+<div class="sec" id="sim" style="padding-top:0">
+  <div class="divrow"><span class="dl"></span><span class="dt">Simulador interactivo</span><span class="dl"></span></div>
+  <div class="shdr">
+    <div class="eyebrow">Prueba en vivo</div>
+    <h2 class="sh">Así trabaja <span class="neon">Kervex</span><br>en tu empresa</h2>
+    <p class="ssub">Selecciona un módulo y observa cómo Kervex automatiza el proceso en tiempo real.</p>
+  </div>
+  <div class="sim-wrap" style="position:relative">
+    <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
+    <div class="sim-header" id="simTabs">
+      <button class="sim-tab on" data-s="0">💬 WhatsApp</button>
+      <button class="sim-tab" data-s="1">🧾 Facturación</button>
+      <button class="sim-tab" data-s="2">📊 Reportes</button>
+      <button class="sim-tab" data-s="3">💸 Cobranzas</button>
+    </div>
+    <div class="sim-body">
+      <div class="sim-left">
+        <div id="flowContainer"></div>
+      </div>
+      <div class="sim-right">
+        <div class="sim-metric-card">
+          <div class="smc-label" id="metLabel">Tiempo ahorrado</div>
+          <div class="smc-val" id="metVal">3h</div>
+          <div class="smc-sub" id="metSub">por día vs proceso manual</div>
+        </div>
+        <div class="sim-bar-wrap">
+          <div class="sim-bar-label"><span id="barLabel">Eficiencia del flujo</span><span id="barPct">0%</span></div>
+          <div class="sim-bar"><div class="sim-bar-fill" id="barFill" style="width:0%"></div></div>
+        </div>
+        <div class="sim-bar-wrap">
+          <div class="sim-bar-label"><span>Reducción de errores</span><span id="errPct">0%</span></div>
+          <div class="sim-bar"><div class="sim-bar-fill" id="errFill" style="width:0%;background:#00ff88"></div></div>
+        </div>
+        <div class="sim-log" id="simLog">
+          <span class="log-line dim">// Selecciona un módulo para iniciar...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="sec" id="proc" style="padding-top:0">
+  <div class="divrow"><span class="dl"></span><span class="dt">Protocolo de activación</span><span class="dl"></span></div>
+  <div class="shdr">
+    <div class="eyebrow">Cómo funciona</div>
+    <h2 class="sh">Tres pasos al<br><span class="neon">piloto automático</span></h2>
+  </div>
+  <div class="proc-grid">
+    <div class="pg"><div class="pg-glow"></div><div class="pg-big">01</div><div class="pg-n">Fase 01 · Inicio</div><h3>Diagnóstico gratuito</h3><p>Analizamos tus procesos en 30 minutos. Identificamos exactamente qué automatizar primero para el mayor impacto.</p><div class="pg-time">⏱ 30 minutos</div></div>
+    <div class="pg"><div class="pg-glow"></div><div class="pg-big">02</div><div class="pg-n">Fase 02 · Diseño</div><h3>Flujo a tu medida</h3><p>Construimos la automatización adaptada a tu negocio y sistemas. Sin genéricos, sin talla única para todos.</p><div class="pg-time">⏱ 3 a 5 días</div></div>
+    <div class="pg"><div class="pg-glow"></div><div class="pg-big">03</div><div class="pg-n">Fase 03 · Lanzamiento</div><h3>En vivo + soporte</h3><p>Activamos, capacitamos a tu equipo y damos soporte continuo. Si falla algo, lo resolvemos antes de que lo notes.</p><div class="pg-time">⏱ Desde el día 1</div></div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="sec" id="price" style="padding-top:0">
+  <div class="divrow"><span class="dl"></span><span class="dt">Planes del sistema</span><span class="dl"></span></div>
+  <div class="shdr">
+    <div class="eyebrow">Inversión</div>
+    <h2 class="sh">Elige tu nivel<br>de <span class="neon">automatización</span></h2>
+  </div>
+  <div class="price-grid">
+    <div class="plan"><span class="pl-name">Starter</span><div class="pl-price">S/. 350<sub>/mes</sub></div><div class="pl-per">Para empezar a automatizar</div><ul class="pl-feats"><li class="pf on"><span class="pf-m">✦</span>1–2 automatizaciones</li><li class="pf on"><span class="pf-m">✦</span>WhatsApp automático</li><li class="pf on"><span class="pf-m">✦</span>Soporte por email</li><li class="pf"><span class="pf-m">·</span>Dashboard en tiempo real</li><li class="pf"><span class="pf-m">·</span>Integraciones avanzadas</li></ul><button class="pl-btn">Activar ahora</button></div>
+    <div class="plan feat"><div class="feat-tag">Popular</div><span class="pl-name">Growth</span><div class="pl-price">S/. 800<sub>/mes</sub></div><div class="pl-per">Para escalar operaciones</div><ul class="pl-feats"><li class="pf on"><span class="pf-m">✦</span>Hasta 5 automatizaciones</li><li class="pf on"><span class="pf-m">✦</span>WhatsApp + Facturación</li><li class="pf on"><span class="pf-m">✦</span>Dashboard en tiempo real</li><li class="pf on"><span class="pf-m">✦</span>Soporte prioritario</li><li class="pf"><span class="pf-m">·</span>Integraciones enterprise</li></ul><button class="pl-btn">Activar ahora</button></div>
+    <div class="plan"><span class="pl-name">Pro</span><div class="pl-price">S/. 1,800<sub>/mes</sub></div><div class="pl-per">Sin límites operacionales</div><ul class="pl-feats"><li class="pf on"><span class="pf-m">✦</span>Flujos ilimitados</li><li class="pf on"><span class="pf-m">✦</span>Integraciones complejas</li><li class="pf on"><span class="pf-m">✦</span>Dashboard personalizado</li><li class="pf on"><span class="pf-m">✦</span>Soporte 24/7</li><li class="pf on"><span class="pf-m">✦</span>RPA + IA incluida</li></ul><button class="pl-btn">Activar ahora</button></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <div class="cta-grid"></div>
+    <div><h2 class="cta-h">¿Listo para operar en <span class="neon">piloto automático?</span></h2><p class="cta-sub">El diagnóstico es gratuito. Sin compromiso. Respuesta en menos de 24 horas.</p></div>
+    <div class="cta-right"><button class="btn-neon">Iniciar diagnóstico gratis</button><div class="cta-note">Lima, Perú · 100% adaptado a tu empresa</div></div>
+  </div>
+</div>
+
+</div><!-- end .wrap -->
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-logo"><svg width="20" height="20" viewBox="0 0 80 80" fill="none"><polygon points="40,4 76,22 76,58 40,76 4,58 4,22" stroke="#00e5ff" stroke-width="1.5" fill="rgba(0,229,255,0.06)"/><circle cx="40" cy="40" r="8" fill="#00e5ff"/></svg><span style="color:var(--neon);font-style:italic">K</span>ERVEX</div>
+      <div class="foot-txt">Automatización inteligente · Lima, Perú</div>
+      <div class="foot-txt">© 2025 Kervex · Todos los derechos reservados</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const FLOWS={
+  0:{
+    label:'WhatsApp 24/7',
+    metric:{label:'Tiempo ahorrado',val:'3h',sub:'por día vs atención manual'},
+    bar:{label:'Eficiencia del flujo',pct:94},
+    err:97,
+    steps:[
+      {t:'Mensaje recibido en WhatsApp',s:'API Business detecta entrada',done:true},
+      {t:'IA clasifica la intención',s:'NLP · 98% de precisión',done:true},
+      {t:'Consulta base de datos',s:'Stock, precios, disponibilidad',act:true},
+      {t:'Genera respuesta personalizada',s:'Texto + imagen + CTA',wait:true},
+      {t:'Envía al cliente en &lt;5s',s:'Entrega confirmada',wait:true},
+      {t:'Registra lead en CRM',s:'Nombre, interés, timestamp',wait:true}
+    ],
+    logs:['[00:00.001] WhatsApp API → mensaje recibido','[00:00.024] NLP → intención: consulta de precio','[00:00.156] ERP → consultando inventario...','[00:00.892] Generando respuesta personalizada...','[00:01.204] → mensaje enviado al cliente','[00:01.250] CRM → lead registrado · status: caliente']
+  },
+  1:{
+    label:'Facturación SUNAT',
+    metric:{label:'Facturas por hora',val:'∞',sub:'vs 4 manuales por hora'},
+    bar:{label:'Velocidad del proceso',pct:98},
+    err:99,
+    steps:[
+      {t:'Venta registrada en sistema',s:'Monto, producto, cliente',done:true},
+      {t:'Datos validados automáticamente',s:'RUC, dirección, moneda',done:true},
+      {t:'Conexión con API SUNAT',s:'Certificado digital activo',act:true},
+      {t:'Factura electrónica generada',s:'XML firmado y enviado',wait:true},
+      {t:'Cliente recibe por email/WhatsApp',s:'PDF + XML adjuntos',wait:true},
+      {t:'Contabilidad actualizada',s:'Asiento automático en ERP',wait:true}
+    ],
+    logs:['[00:00.001] Venta #4521 → iniciando facturación','[00:00.045] Validando datos del cliente...','[00:00.312] SUNAT API → conectado','[00:01.105] Factura E001-4521 → generada','[00:01.380] Email + WhatsApp → enviados','[00:01.402] Contabilidad → asiento #8847 creado']
+  },
+  2:{
+    label:'Reportes automáticos',
+    metric:{label:'Horas ahorradas',val:'5h',sub:'por semana en reportes'},
+    bar:{label:'Cobertura de datos',pct:100},
+    err:100,
+    steps:[
+      {t:'Datos capturados en tiempo real',s:'Ventas, inventario, cobranzas',done:true},
+      {t:'Motor de análisis procesa',s:'Algoritmos de BI activos',done:true},
+      {t:'Dashboard actualizado',s:'Gráficos y KPIs en vivo',act:true},
+      {t:'Anomalías detectadas',s:'Desviaciones > 15% alertadas',wait:true},
+      {t:'Reporte semanal generado',s:'PDF ejecutivo automático',wait:true},
+      {t:'Enviado al gerente',s:'Email + WhatsApp + Slack',wait:true}
+    ],
+    logs:['[00:00.001] Recolectando datos de 8 fuentes...','[00:00.234] 1,847 registros procesados','[00:00.891] Dashboard → actualizado','[00:01.002] Anomalía detectada: stock bajo en SKU-442','[00:01.234] Reporte ejecutivo → generado','[00:01.456] Gerencia → notificada por 3 canales']
+  },
+  3:{
+    label:'Cobranzas automáticas',
+    metric:{label:'Mejora en cobro',val:'80%',sub:'más recuperación de deuda'},
+    bar:{label:'Tasa de recuperación',pct:80},
+    err:85,
+    steps:[
+      {t:'Facturas por vencer detectadas',s:'3 días antes del límite',done:true},
+      {t:'Recordatorio amigable enviado',s:'WhatsApp + email personalizado',done:true},
+      {t:'Seguimiento el día de vencer',s:'Segundo recordatorio + link de pago',act:true},
+      {t:'Sin respuesta → escalado',s:'Alerta al equipo comercial',wait:true},
+      {t:'Gestión de morosidad',s:'Protocolo automático activo',wait:true},
+      {t:'Reporte de cartera generado',s:'Estado de cada cuenta',wait:true}
+    ],
+    logs:['[00:00.001] Escaneando 247 facturas pendientes...','[00:00.156] 12 facturas vencen en 3 días','[00:00.380] Recordatorios enviados por WhatsApp','[00:01.002] 8 facturas vencen hoy → alerta activa','[00:01.234] Equipo comercial → notificado','[00:01.456] Reporte de cartera → enviado al gerente']
+  }
+};
+
+let curSim=0, simInterval=null, curStep=0;
+
+function renderFlow(idx){
+  const f=FLOWS[idx];
+  const c=document.getElementById('flowContainer');
+  let html='<div class="flow-builder">';
+  f.steps.forEach((s,i)=>{
+    const isLast=i===f.steps.length-1;
+    const cls=s.done?'done':s.act?'act':'';
+    html+=`<div class="fb-step">
+      <div class="fb-left">
+        <div class="fb-node ${cls}"></div>
+        ${!isLast?`<div class="fb-line ${s.done?'done':''}"></div>`:''}
+      </div>
+      <div class="fb-content ${cls}">
+        <div class="fb-row">
+          <div>
+            <div class="fb-title ${cls?'on':''}">${s.t}</div>
+            <div class="fb-sub">${s.s}</div>
+          </div>
+          <div class="fb-badge ${s.done?'done':s.act?'act':'wait'}">${s.done?'✓ listo':s.act?'activo':'espera'}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  c.innerHTML=html;
+  document.getElementById('metLabel').textContent=f.metric.label;
+  document.getElementById('metVal').textContent=f.metric.val;
+  document.getElementById('metSub').textContent=f.metric.sub;
+  document.getElementById('barLabel').textContent=f.bar.label;
+  document.getElementById('barPct').textContent='0%';
+  document.getElementById('errPct').textContent='0%';
+  document.getElementById('barFill').style.width='0%';
+  document.getElementById('errFill').style.width='0%';
+  document.getElementById('simLog').innerHTML='<span class="log-line act">// Iniciando módulo '+f.label+'...</span>';
+  setTimeout(()=>{
+    document.getElementById('barFill').style.width=f.bar.pct+'%';
+    document.getElementById('barPct').textContent=f.bar.pct+'%';
+    document.getElementById('errFill').style.width=f.err+'%';
+    document.getElementById('errPct').textContent=f.err+'%';
+  },300);
+  curStep=0;
+  if(simInterval)clearInterval(simInterval);
+  let li=0;
+  simInterval=setInterval(()=>{
+    if(li<f.logs.length){
+      const log=document.getElementById('simLog');
+      const cls=li===f.logs.length-1?'ok':li>2?'act':'log-line';
+      log.innerHTML+='<span class="log-line '+cls+'">'+f.logs[li]+'</span>';
+      li++;
+    }
+    advanceFlow(idx);
+  },800);
+}
+
+function advanceFlow(idx){
+  const f=FLOWS[idx];
+  if(curStep>=f.steps.length-1){curStep=0;return;}
+  curStep++;
+  const nodes=document.querySelectorAll('.fb-node');
+  const lines=document.querySelectorAll('.fb-line');
+  const badges=document.querySelectorAll('.fb-badge');
+  const titles=document.querySelectorAll('.fb-title');
+  const contents=document.querySelectorAll('.fb-content');
+  nodes.forEach((n,i)=>{n.className='fb-node';if(i<curStep)n.classList.add('done');else if(i===curStep)n.classList.add('act');});
+  lines.forEach((l,i)=>{l.className='fb-line';if(i<curStep)l.classList.add('done');});
+  badges.forEach((b,i)=>{b.className='fb-badge';if(i<curStep){b.classList.add('done');b.textContent='✓ listo';}else if(i===curStep){b.classList.add('act');b.textContent='activo';}else{b.classList.add('wait');b.textContent='espera';}});
+  titles.forEach((t,i)=>{t.className='fb-title';if(i<=curStep)t.classList.add('on');});
+  contents.forEach((c,i)=>{c.className='fb-content';if(i<curStep)c.classList.add('done');else if(i===curStep)c.classList.add('act');});
+}
+
+document.getElementById('simTabs').addEventListener('click',e=>{
+  const b=e.target.closest('.sim-tab');
+  if(!b)return;
+  document.querySelectorAll('.sim-tab').forEach(t=>t.classList.remove('on'));
+  b.classList.add('on');
+  curSim=parseInt(b.dataset.s);
+  renderFlow(curSim);
+});
+
+renderFlow(0);
+
+// WSP CHAT SIMULATION
+const convos=[
+  [{u:true,t:"Hola! ¿Tienen precio especial para pedidos grandes?"},{u:false,t:"¡Hola! Soy Kervex Bot 🤖\nSí, tenemos descuentos desde 50 unidades. ¿Qué producto te interesa?"},{u:true,t:"Necesito 200 unidades del producto A"},{u:false,t:"Perfecto! Para 200 unidades tienes 18% de descuento.\n📦 Precio unitario: S/. 45.00\n💰 Total: S/. 7,380.00\n¿Genero una cotización ahora?"}],
+  [{u:true,t:"¿A qué hora cierran?"},{u:false,t:"¡Hola! Atendemos Lun-Sáb 9am-7pm 🕐\nPero puedo ayudarte ahora mismo. ¿En qué te ayudo?"},{u:true,t:"Quiero hacer un pedido"},{u:false,t:"Genial! Te paso con nuestro catálogo actualizado.\n📋 Ver catálogo → bit.ly/kervex-cat\nO dime qué buscas y te cotizo al instante ⚡"}],
+  [{u:true,t:"Tienen stock del modelo X200?"},{u:false,t:"Consultando inventario en tiempo real... ⚡"},{u:false,t:"✅ X200 disponible: 34 unidades\nPrecio regular: S/. 280\nEntrega: 24-48 horas\n¿Cuántas necesitas?"},{u:true,t:"Dame 5 unidades"},{u:false,t:"¡Listo! Pedido #PED-8847 registrado 🎉\nTotal: S/. 1,400\nTe enviamos confirmación en segundos."}]
+];
+let ci=0,mi=0,chatTimer;
+function nextMsg(){
+  const c=document.getElementById('chatArea');
+  const conv=convos[ci%convos.length];
+  if(mi>=conv.length){ci++;mi=0;setTimeout(()=>{c.innerHTML='';nextMsg();},2000);return;}
+  const msg=conv[mi];
+  if(!msg.u){
+    const typing=document.createElement('div');
+    typing.className='chat-msg typing';
+    typing.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';
+    c.appendChild(typing);
+    c.scrollTop=c.scrollHeight;
+    setTimeout(()=>{
+      typing.remove();
+      const d=document.createElement('div');
+      d.className='chat-msg bot';
+      d.innerHTML=msg.t.replace(/\n/g,'<br>');
+      c.appendChild(d);
+      c.scrollTop=c.scrollHeight;
+      mi++;
+      chatTimer=setTimeout(nextMsg,2200);
+    },900);
+  } else {
+    const d=document.createElement('div');
+    d.className='chat-msg user';
+    d.textContent=msg.t;
+    c.appendChild(d);
+    c.scrollTop=c.scrollHeight;
+    mi++;
+    chatTimer=setTimeout(nextMsg,1200);
+  }
+}
+nextMsg();
+
+// FLOATING ROBOT BEHAVIOR
+const robo=document.getElementById('robo');
+const bubble=document.getElementById('robo-bubble');
+const msgs=['¡Hola! Soy Ker, tu asistente de automatización 🤖','¿Listo para automatizar tu empresa?','Kervex puede ahorrarle 3h diarias a tu equipo','Tenemos un diagnóstico GRATIS para ti 🎁','¿Ves el simulador? Pruébalo ahora →','Lima tiene miles de empresas sin automatizar...','Tu competencia ya está automatizando ⚡'];
+let ri=0,rshow=false;
+setInterval(()=>{
+  bubble.textContent=msgs[ri%msgs.length];
+  ri++;
+  robo.classList.add('show-bubble');
+  rshow=true;
+  setTimeout(()=>{robo.classList.remove('show-bubble');rshow=false;},3500);
+},7000);
+robo.addEventListener('click',()=>{
+  if(!rshow){
+    bubble.textContent=msgs[ri%msgs.length];ri++;
+    robo.classList.add('show-bubble');
+    setTimeout(()=>robo.classList.remove('show-bubble'),3000);
+  }
+});
+
+// SCROLL REVEAL
+const io=new IntersectionObserver(en=>{
+  en.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});
+},{threshold:0.06});
+document.querySelectorAll('.pc,.pg,.plan').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(16px)';
+  el.style.transition='opacity 0.4s ease, transform 0.4s ease';
+  io.observe(el);
+});
+</script>

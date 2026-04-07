@@ -2,7 +2,7 @@
 @source "../";
 
 /* ============================================================
-   KERVEX NEON TERMINAL — Design System
+   VERKEX NEON TERMINAL — Design System
    ============================================================ */
 
 :root {
@@ -21,8 +21,8 @@
   --green: #00ff88;
   --green-dim: rgba(0,255,136,0.08);
   --text: #e0f4ff;
-  --muted: #4a6880;
-  --muted2: #6a8faa;
+  --muted: #95b3c9;
+  --muted2: #b4d0e4;
   --wire: rgba(0,229,255,0.1);
   --wire2: rgba(0,229,255,0.05);
   --sans: 'Exo 2', sans-serif;
@@ -79,8 +79,8 @@ nav { background: rgba(5,8,16,0.94); backdrop-filter: blur(24px); border-bottom:
 .nav-wrap { max-width: 1120px; margin: 0 auto; padding: 0 36px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; letter-spacing: -1px; color: var(--text); }
 .logo-name { font-size: 26px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; font-style: italic; }
-.logo-ker { color: var(--text); }
-.logo-vex { color: var(--neon); }
+.logo-ver { color: var(--text); }
+.logo-kex { color: var(--neon); }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a { font-family: var(--mono); font-size: 11px; letter-spacing: .8px; color: var(--muted2); text-decoration: none; transition: color .2s; }
 .nav-links a:hover { color: var(--neon); }
@@ -97,7 +97,7 @@ nav { background: rgba(5,8,16,0.94); backdrop-filter: blur(24px); border-bottom:
 /* ============================================================
    HERO
    ============================================================ */
-.hero { padding: 80px 0 60px; display: grid; grid-template-columns: 1fr 460px; gap: 60px; align-items: center; }
+.hero { padding: 80px 0 60px; display: grid; grid-template-columns: 1fr 460px; gap: 60px; align-items: start; }
 .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .eye-line { width: 20px; height: 2px; background: var(--neon); }
 .eye-txt { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--neon); }
@@ -106,7 +106,7 @@ nav { background: rgba(5,8,16,0.94); backdrop-filter: blur(24px); border-bottom:
 .hero h1 { font-size: clamp(40px,5vw,72px); font-weight: 900; line-height: 1.0; letter-spacing: -3px; margin-bottom: 18px; text-transform: uppercase; }
 .hero h1 .neon { color: var(--neon); text-shadow: 0 0 30px rgba(0,229,255,0.4); }
 .hero h1 .outline { -webkit-text-stroke: 1.5px rgba(0,229,255,0.4); color: transparent; }
-.hero-sub { font-size: 14px; line-height: 1.8; color: var(--muted2); max-width: 460px; margin-bottom: 36px; font-weight: 300; }
+.hero-sub { font-size: 14px; line-height: 1.8; color: var(--muted2); max-width: 460px; margin-bottom: 36px; font-weight: 300; padding-top: 32px; }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
 .btn-neon { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; background: var(--neon); color: var(--void); border: none; padding: 13px 28px; cursor: pointer; font-weight: 700; transition: all .2s; clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px); }
 .btn-neon:hover { background: #40eeff; box-shadow: 0 0 20px rgba(0,229,255,0.4); }
@@ -305,6 +305,21 @@ footer { border-top: 1px solid var(--wire); padding: 26px 0; position: relative;
 .foot-txt { font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
 /* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.test-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.test-card { background: var(--panel); border: 1px solid var(--wire); padding: 28px 24px; position: relative; overflow: hidden; transition: border-color .3s; }
+.test-card:hover { border-color: rgba(0,229,255,0.3); }
+.test-card::after { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--neon); }
+.test-quote { font-size: 13px; line-height: 1.8; color: var(--muted2); font-weight: 300; font-style: italic; margin-bottom: 20px; position: relative; padding-left: 16px; }
+.test-quote::before { content: '"'; position: absolute; left: -4px; top: -8px; font-size: 36px; color: rgba(0,229,255,0.2); font-style: normal; font-weight: 900; }
+.test-author { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.test-info { display: flex; flex-direction: column; }
+.test-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.test-role { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.test-metric { font-family: var(--mono); font-size: 10px; color: var(--green); background: var(--green-dim); border: 1px solid rgba(0,255,136,0.2); padding: 3px 10px; flex-shrink: 0; }
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
@@ -314,6 +329,7 @@ footer { border-top: 1px solid var(--wire); padding: 26px 0; position: relative;
   .sim-right { display: none; }
   .prob-grid { grid-template-columns: 1fr 1fr; }
   .proc-grid { grid-template-columns: 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
   .price-grid { grid-template-columns: 1fr; }
   .cta-inner { flex-direction: column; padding: 40px 32px; }
   .cta-right { align-items: flex-start; }
