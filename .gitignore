@@ -20,5 +20,15 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Windows
+Thumbs.db
+desktop.ini
+
 # jetbrains setting folder
 .idea/
+
+# VS Code (optional — remove if you want to share settings)
+# .vscode/
+
+# Vercel
+.vercel/
